@@ -85,7 +85,7 @@ buildPointCloud: # (Metashape: buildDepthMaps, buildPointCloud, (optionally) cla
   enabled: True
   ## For depth maps (buildDepthMaps)
   downscale: 4 # How much to coarsen the photos when searching for matches to build the point cloud. For large photosets, values < 4 likely take prohibitively long. Accepts numbers 2^x (https://www.agisoft.com/forum/index.php?topic=11697.0).
-  filter_mode: Metashape.ModerateFiltering # How to filter the point cloud. Options are NoFiltering, MildFiltering, ModerateFiltering, AggressiveFiltering. Aggressive filtering removes detail and makes worse DEMs (at least for forest). NoFiltering takes very long. In trials, it never completed.
+  filter_mode: Metashape.MildFiltering # How to filter the point cloud. Options are NoFiltering, MildFiltering, ModerateFiltering, AggressiveFiltering. Aggressive filtering removes detail and makes worse DEMs (at least for forest). NoFiltering takes very long. In trials, it never completed.
   reuse_depth: False # Purpose unknown.
   ## For point cloud (buildPointCloud)
   keep_depth: False # Purpose unknown.
@@ -103,7 +103,7 @@ classifyGroundPoints: # (Metashape: classifyGroundPoints) # classify points, IF 
   cell_size: 50.0
 
 buildDem: # (Metashape: buildDem, (optionally) classifyGroundPoints, exportRaster)
-  enabled: True
+  enabled: False
   classify_ground_points: False # Should ground points be classified as part of this step? Note that an alternative is to calculate them as a part of buildPointCloud (above)
   ## For building DEM (buildDem)
   type: "both" # Options: "DSM" or "DTM" or "both". Type of DEM to export (digital surface model, digital terrain model, or both).
@@ -115,7 +115,7 @@ buildDem: # (Metashape: buildDem, (optionally) classifyGroundPoints, exportRaste
   tiff_overviews: True # Include coarse-scale raster data in file for quick display in GIS.
 
 buildOrthomosaic: # (Metashape: buildOrthomosaic, exportRaster)
-  enabled: True
+  enabled: False
   ## For building orthomosaic (buildOrthomosaic)
   surface: "DSM" # The surface to build the orthomosaic onto. "DTM", "DSM", "USGS", or "DTMandDSM. DTM and DSM refer to elevation models built by Metashape (buildDem step above) and stored in the project. If USGS, you must use GCPs with accurate elevations (ideally extracted from the USGS DEM).
   usgs_dem_path: "dem_usgs/dem_usgs.tif" # Path to USGS DEM for the project area. Needed if surface (parameter above) is "USGS".

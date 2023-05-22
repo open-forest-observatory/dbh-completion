@@ -84,8 +84,8 @@ optimizeCameras: # (Metashape: optimizeCameras)
 buildPointCloud: # (Metashape: buildDepthMaps, buildPointCloud, (optionally) classifyGroundPoints, and exportPoints)
   enabled: True
   ## For depth maps (buildDepthMaps)
-  downscale: 4 # How much to coarsen the photos when searching for matches to build the point cloud. For large photosets, values < 4 likely take prohibitively long. Accepts numbers 2^x (https://www.agisoft.com/forum/index.php?topic=11697.0).
-  filter_mode: Metashape.ModerateFiltering # How to filter the point cloud. Options are NoFiltering, MildFiltering, ModerateFiltering, AggressiveFiltering. Aggressive filtering removes detail and makes worse DEMs (at least for forest). NoFiltering takes very long. In trials, it never completed.
+  downscale: 2 # How much to coarsen the photos when searching for matches to build the point cloud. For large photosets, values < 4 likely take prohibitively long. Accepts numbers 2^x (https://www.agisoft.com/forum/index.php?topic=11697.0).
+  filter_mode: Metashape.MildFiltering # How to filter the point cloud. Options are NoFiltering, MildFiltering, ModerateFiltering, AggressiveFiltering. Aggressive filtering removes detail and makes worse DEMs (at least for forest). NoFiltering takes very long. In trials, it never completed.
   reuse_depth: False # Purpose unknown.
   ## For point cloud (buildPointCloud)
   keep_depth: False # Purpose unknown.

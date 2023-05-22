@@ -6,26 +6,21 @@ library(terra)
 library(here)
 
 
-# The root of the data directory
-data_dir = readLines(here("data_dir.txt"), n=1)
-
-#source(here("scripts/convenience_functions.R"))
-
 #### Inputs ####
 
 # Project area boundary
-focal_area = st_read(file.path(data_dir, "boundaries/delta-boundary-from-photos.gpkg")) |> st_buffer(5)
+focal_area = st_read("/ofo-share/dbh-completion_data/aois/ground_map_mask_precise.geojson") |> st_buffer(25) # this buffer is less than the buffer used to clip drone photos: that buffer was 75
 # DTM
-dtm = rast(file.path(data_dir, "str-disp_drone-data_imagery-processed/outputs/120m-01/DeltaB-120m_20230310T1701_dtm.tif"))
+dtm = rast("/ofo-share/dbh-completion_data/metashape-outputs/composite_20230520T0519_dtm.tif")
 # DSM file
-dsm = rast(file.path(data_dir, "str-disp_drone-data_imagery-processed/outputs/120m-01/DeltaB-120m_20230310T1701_dsm.tif"))
+dsm = rast("/ofo-share/dbh-completion_data/metashape-outputs/composite_20230520T0519_dsm.tif")
 
-# Project area boundary
-focal_area = st_read(file.path(data_dir, "boundaries/emerald-boundary-from-photos.gpkg"))
-# DTM
-dtm = rast(file.path(data_dir, "str-disp_drone-data_imagery-processed/outputs/flattened-120m/emerald-120m_20230401T2215_dtm.tif"))
-# DSM file
-dsm = rast(file.path(data_dir, "str-disp_drone-data_imagery-processed/outputs/flattened-120m/emerald-120m_20230401T2215_dsm.tif"))
+# # Project area boundary
+# focal_area = st_read(file.path(data_dir, "boundaries/emerald-boundary-from-photos.gpkg"))
+# # DTM
+# dtm = rast(file.path(data_dir, "str-disp_drone-data_imagery-processed/outputs/flattened-120m/emerald-120m_20230401T2215_dtm.tif"))
+# # DSM file
+# dsm = rast(file.path(data_dir, "str-disp_drone-data_imagery-processed/outputs/flattened-120m/emerald-120m_20230401T2215_dsm.tif"))
 
 
 
@@ -51,6 +46,6 @@ chm = dsm - dtm_interp
 chm_proj = project(chm,y = "epsg:26910", res=0.12, method="bilinear")
 
 # create dir if doesn't exist, then write
-writeRaster(chm_proj,file.path(data_dir, "chms/emerald-120m_20230401T2215_chm.tif"), overwrite=TRUE) # naming it metashape because it's just based on metashape dsm (and usgs dtm) -- to distinguish from one generated from point cloud
+writeRaster(chm_proj,"/ofo-share/dbh-completion_data/tree-detection-products/composite_20230520T0519_chm.tif", overwrite=TRUE) # naming it metashape because it's just based on metashape dsm (and usgs dtm) -- to distinguish from one generated from point cloud
 
 gc()
